@@ -1,0 +1,164 @@
+{
+	"id": "8b154918-13ff-4754-b799-edbf1ad5ff16",
+	"name": "🎮 Premium Chat Lobby - Working Collection v2",
+	"timestamp": "2025-08-20T01:38:42.983Z",
+	"collection_id": "40948150-9d50f58e-b45f-42fb-abfc-1a4ac65bd431",
+	"folder_id": 0,
+	"environment_id": "40948150-5a0ffdc9-7f2e-43b1-a47a-0837283c8859",
+	"totalPass": 7,
+	"delay": 0,
+	"persist": true,
+	"status": "error",
+	"startedAt": "2025-08-20T01:38:42.075Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "250d5fb3-aef3-4936-ba47-b5dded9900e6",
+			"name": "🔐 Quick Start - Login Premium User",
+			"url": "http://localhost:8001/api/auth/login/",
+			"time": 194,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"No Server Error (500)": true,
+				"Login Success": true
+			},
+			"testPassFailCounts": {
+				"No Server Error (500)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Login Success": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				194
+			],
+			"allTests": [
+				{
+					"No Server Error (500)": true,
+					"Login Success": true
+				}
+			]
+		},
+		{
+			"id": "fe4da0d8-1a2b-4237-8d5a-eb24ebb88187",
+			"name": "👤 My Profile",
+			"url": "http://localhost:8001/api/me/",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"No Server Error (500)": true
+			},
+			"testPassFailCounts": {
+				"No Server Error (500)": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"No Server Error (500)": true
+				}
+			]
+		},
+		{
+			"id": "c9bdf602-7896-4258-b3f8-57f8fe0b349b",
+			"name": "📋 List All Lobbies",
+			"url": "http://localhost:8001/api/lobbies/",
+			"time": 78,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"No Server Error (500)": true,
+				"Lobbies Retrieved": true
+			},
+			"testPassFailCounts": {
+				"No Server Error (500)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Lobbies Retrieved": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				78
+			],
+			"allTests": [
+				{
+					"No Server Error (500)": true,
+					"Lobbies Retrieved": true
+				}
+			]
+		},
+		{
+			"id": "92782ab7-7403-4743-8a66-c7bbb69e25f8",
+			"name": "➕ Create New Lobby",
+			"url": "http://localhost:8001/api/lobbies/",
+			"time": 64,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"No Server Error (500)": true,
+				"Lobby Created": true
+			},
+			"testPassFailCounts": {
+				"No Server Error (500)": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Lobby Created": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				64
+			],
+			"allTests": [
+				{
+					"No Server Error (500)": true,
+					"Lobby Created": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 344,
+	"collection": {
+		"requests": [
+			{
+				"id": "250d5fb3-aef3-4936-ba47-b5dded9900e6",
+				"method": "POST"
+			},
+			{
+				"id": "fe4da0d8-1a2b-4237-8d5a-eb24ebb88187",
+				"method": "GET"
+			},
+			{
+				"id": "c9bdf602-7896-4258-b3f8-57f8fe0b349b",
+				"method": "GET"
+			},
+			{
+				"id": "92782ab7-7403-4743-8a66-c7bbb69e25f8",
+				"method": "POST"
+			}
+		]
+	}
+}

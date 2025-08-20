@@ -1,0 +1,857 @@
+{
+  "info": {
+    "name": "🎮 Premium Chat Lobby - Complete Test Suite",
+    "description": "Complete API collection for Premium Chat Lobby system with demo users and comprehensive test scenarios.\n\n🎯 **Demo Users Ready:**\n- **Premium Users**: premium_user_1, premium_user_2 (password: testpass123)\n- **Normal Users**: user_1, user_2, user_3, user_4, user_5 (password: testpass123)\n\n🚀 **Recommended Test Flow:**\n1. 🔐 Login with premium_user_1\n2. 👤 Get user profile\n3. 📋 List existing lobbies\n4. ➕ Create new lobby (Premium only)\n5. 🏠 Join/leave lobbies\n6. 💬 Send messages\n7. 🛡️ Test moderation features\n\n📋 **Pre-seeded Lobbies:** Gaming Lounge, VIP Room, General Chat\n\n⚡ **Pro Tips:**\n- Variables auto-update after login\n- Lobby ID auto-captured after creation\n- All endpoints include example responses",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0
+    }
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8001/api",
+      "type": "string",
+      "description": "Base API URL"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string",
+      "description": "JWT Access Token (auto-set after login)"
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "type": "string",
+      "description": "JWT Refresh Token (auto-set after login)"
+    },
+    {
+      "key": "lobby_id",
+      "value": "1",
+      "type": "string",
+      "description": "Current lobby ID (auto-set after lobby creation)"
+    },
+    {
+      "key": "user_id",
+      "value": "3",
+      "type": "string",
+      "description": "Target user ID for moderation actions"
+    }
+  ],
+  "item": [
+    {
+      "name": "🔐 Authentication",
+      "description": "User authentication endpoints with demo credentials",
+      "item": [
+        {
+          "name": "📝 Register New User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newuser\",\n  \"email\": \"newuser@example.com\",\n  \"password\": \"newpass123\",\n  \"password_confirm\": \"newpass123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register/",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register", ""]
+            },
+            "description": "Register a new user account. New users are not premium by default."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"newuser\",\n  \"email\": \"newuser@example.com\",\n  \"password\": \"newpass123\",\n  \"password_confirm\": \"newpass123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/auth/register/",
+                  "host": ["{{base_url}}"],
+                  "path": ["auth", "register", ""]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"message\": \"User created successfully\",\n  \"user_id\": 8\n}"
+            }
+          ]
+        },
+        {
+          "name": "🔑 Login - Premium User 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', response.access);",
+                  "    pm.collectionVariables.set('refresh_token', response.refresh);",
+                  "    pm.test('Login successful and tokens saved', () => {",
+                  "        pm.expect(response.access).to.not.be.empty;",
+                  "        pm.expect(response.refresh).to.not.be.empty;",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"premium_user_1\",\n  \"password\": \"testpass123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login/",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login", ""]
+            },
+            "description": "Login with premium user credentials. Tokens are automatically saved to collection variables."
+          },
+          "response": []
+        },
+        {
+          "name": "🔑 Login - Normal User 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', response.access);",
+                  "    pm.collectionVariables.set('refresh_token', response.refresh);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"user_1\",\n  \"password\": \"testpass123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login/",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login", ""]
+            },
+            "description": "Login with normal user credentials (cannot create lobbies)."
+          },
+          "response": []
+        },
+        {
+          "name": "🔄 Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', response.access);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/refresh/",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "refresh", ""]
+            },
+            "description": "Refresh access token using refresh token."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "👤 User Profile",
+      "description": "User profile management",
+      "item": [
+        {
+          "name": "👤 Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/me/",
+              "host": ["{{base_url}}"],
+              "path": ["me", ""]
+            },
+            "description": "Get current user's profile information including premium status."
+          },
+          "response": [
+            {
+              "name": "Premium User Profile",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/me/",
+                  "host": ["{{base_url}}"],
+                  "path": ["me", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"id\": 1,\n  \"username\": \"premium_user_1\",\n  \"email\": \"premium1@example.com\",\n  \"is_premium\": true,\n  \"created_at\": \"2024-01-01T10:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "✏️ Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newemail@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/me/",
+              "host": ["{{base_url}}"],
+              "path": ["me", ""]
+            },
+            "description": "Update user profile information (email only for now)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🏠 Lobbies Management",
+      "description": "Lobby CRUD operations and actions",
+      "item": [
+        {
+          "name": "📋 List All Lobbies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", ""]
+            },
+            "description": "Get all lobbies (public and private if you're a member)."
+          },
+          "response": [
+            {
+              "name": "Lobbies List",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/lobbies/",
+                  "host": ["{{base_url}}"],
+                  "path": ["lobbies", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"count\": 3,\n  \"next\": null,\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": 1,\n      \"name\": \"Gaming Lounge\",\n      \"owner\": {\n        \"id\": 1,\n        \"username\": \"premium_user_1\",\n        \"is_premium\": true\n      },\n      \"is_public\": true,\n      \"status\": \"open\",\n      \"max_participants\": 8,\n      \"current_participants_count\": 3,\n      \"is_full\": false,\n      \"created_at\": \"2024-01-01T10:00:00Z\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "🔍 List Public Open Lobbies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/?public=1&status=open",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", ""],
+              "query": [
+                {
+                  "key": "public",
+                  "value": "1",
+                  "description": "Filter public lobbies only"
+                },
+                {
+                  "key": "status",
+                  "value": "open",
+                  "description": "Filter open lobbies only"
+                }
+              ]
+            },
+            "description": "Get only public lobbies that are currently open for joining."
+          },
+          "response": []
+        },
+        {
+          "name": "🔎 Search Lobbies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/?search=gaming",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", ""],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "gaming",
+                  "description": "Search in lobby name and owner username"
+                }
+              ]
+            },
+            "description": "Search lobbies by name or owner username."
+          },
+          "response": []
+        },
+        {
+          "name": "➕ Create New Lobby (Premium Only)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('lobby_id', response.id.toString());",
+                  "    pm.test('Lobby created and ID saved', () => {",
+                  "        pm.expect(response.id).to.not.be.undefined;",
+                  "        pm.expect(response.name).to.eql('Test Gaming Lobby');",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Gaming Lobby\",\n  \"is_public\": true,\n  \"max_participants\": 8\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", ""]
+            },
+            "description": "Create a new lobby (requires premium user). Lobby ID is automatically saved to variables."
+          },
+          "response": []
+        },
+        {
+          "name": "🏠 Get Lobby Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", ""]
+            },
+            "description": "Get detailed information about a specific lobby including members and recent messages."
+          },
+          "response": [
+            {
+              "name": "Lobby Details",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/lobbies/1/",
+                  "host": ["{{base_url}}"],
+                  "path": ["lobbies", "1", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"id\": 1,\n  \"name\": \"Gaming Lounge\",\n  \"owner\": {\n    \"id\": 1,\n    \"username\": \"premium_user_1\",\n    \"is_premium\": true\n  },\n  \"is_public\": true,\n  \"status\": \"open\",\n  \"max_participants\": 8,\n  \"current_participants_count\": 3,\n  \"is_full\": false,\n  \"memberships\": [\n    {\n      \"user\": {\n        \"id\": 1,\n        \"username\": \"premium_user_1\",\n        \"is_premium\": true\n      },\n      \"role\": \"owner\",\n      \"joined_at\": \"2024-01-01T10:00:00Z\"\n    }\n  ],\n  \"recent_messages\": [\n    {\n      \"id\": 1,\n      \"sender\": {\n        \"id\": 1,\n        \"username\": \"premium_user_1\",\n        \"is_premium\": true\n      },\n      \"content\": \"Welcome to Gaming Lounge!\",\n      \"created_at\": \"2024-01-01T10:05:00Z\",\n      \"is_deleted\": false\n    }\n  ],\n  \"created_at\": \"2024-01-01T10:00:00Z\",\n  \"updated_at\": \"2024-01-01T10:00:00Z\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "✏️ Update Lobby (Owner Only)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Lobby Name\",\n  \"max_participants\": 10\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", ""]
+            },
+            "description": "Update lobby settings (only owner can do this)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🚪 Lobby Actions",
+      "description": "Join, leave, and game management",
+      "item": [
+        {
+          "name": "🚪 Join Lobby",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/join/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "join", ""]
+            },
+            "description": "Join a lobby (if not banned, lobby is open, and not full)."
+          },
+          "response": []
+        },
+        {
+          "name": "🚶 Leave Lobby",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/leave/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "leave", ""]
+            },
+            "description": "Leave a lobby (owners must transfer ownership first)."
+          },
+          "response": []
+        },
+        {
+          "name": "🎮 Start Game (Owner Only)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/start/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "start", ""]
+            },
+            "description": "Start the game in lobby (changes status to 'in_game')."
+          },
+          "response": []
+        },
+        {
+          "name": "🔒 Close Lobby (Owner Only)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/close/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "close", ""]
+            },
+            "description": "Close the lobby (changes status to 'closed')."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🛡️ Moderation",
+      "description": "Kick, ban, and moderator management",
+      "item": [
+        {
+          "name": "👢 Kick User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}},\n  \"reason\": \"Inappropriate behavior\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/kick/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "kick", ""]
+            },
+            "description": "Kick a user from lobby (owner/moderator only). User can rejoin unless banned."
+          },
+          "response": []
+        },
+        {
+          "name": "🚫 Ban User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}},\n  \"reason\": \"Repeated violations of lobby rules\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/ban/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "ban", ""]
+            },
+            "description": "Ban a user from lobby permanently (owner/moderator only)."
+          },
+          "response": []
+        },
+        {
+          "name": "✅ Unban User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/unban/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "unban", ""]
+            },
+            "description": "Remove ban from a user (owner/moderator only)."
+          },
+          "response": []
+        },
+        {
+          "name": "⭐ Add Moderator",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/add_moderator/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "add_moderator", ""]
+            },
+            "description": "Promote a member to moderator (owner only)."
+          },
+          "response": []
+        },
+        {
+          "name": "⭐ Remove Moderator",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/remove_moderator/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "remove_moderator", ""]
+            },
+            "description": "Demote a moderator to regular member (owner only)."
+          },
+          "response": []
+        },
+        {
+          "name": "👑 Transfer Ownership",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/transfer_ownership/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "transfer_ownership", ""]
+            },
+            "description": "Transfer lobby ownership to another member (current owner only)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "💬 Messages",
+      "description": "Chat message operations",
+      "item": [
+        {
+          "name": "📨 List Messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/messages/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "messages", ""]
+            },
+            "description": "Get all messages in a lobby (most recent first, paginated)."
+          },
+          "response": [
+            {
+              "name": "Messages List",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/lobbies/1/messages/",
+                  "host": ["{{base_url}}"],
+                  "path": ["lobbies", "1", "messages", ""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"count\": 5,\n  \"next\": null,\n  \"previous\": null,\n  \"results\": [\n    {\n      \"id\": 5,\n      \"sender\": {\n        \"id\": 1,\n        \"username\": \"premium_user_1\",\n        \"is_premium\": true\n      },\n      \"content\": \"Hello everyone! This is a test message.\",\n      \"created_at\": \"2024-01-01T10:15:00Z\",\n      \"is_deleted\": false\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "💬 Send Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Hello everyone! This is a test message from Postman.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/messages/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "messages", ""]
+            },
+            "description": "Send a message to the lobby (must be a member)."
+          },
+          "response": []
+        },
+        {
+          "name": "📄 Get Specific Message",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/messages/1/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "messages", "1", ""]
+            },
+            "description": "Get details of a specific message."
+          },
+          "response": []
+        },
+        {
+          "name": "🗑️ Delete Message (Soft Delete)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/messages/1/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "messages", "1", ""]
+            },
+            "description": "Delete a message (owner/moderator or message sender only). This is a soft delete."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🧪 Test Scenarios",
+      "description": "Complete test scenarios demonstrating the system",
+      "item": [
+        {
+          "name": "🎬 Scenario 1: Premium User Full Flow",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/me/",
+              "host": ["{{base_url}}"],
+              "path": ["me", ""]
+            },
+            "description": "📋 **Test Scenario 1: Premium User Complete Flow**\n\n**Steps to test:**\n1. Login with premium_user_1\n2. Get profile (verify is_premium: true)\n3. List lobbies\n4. Create new lobby\n5. Send message to lobby\n6. Test moderation features\n\n**Expected Results:**\n- ✅ Can create lobbies\n- ✅ Can moderate own lobbies\n- ✅ Can send messages\n- ✅ Auto-becomes owner of created lobby"
+          },
+          "response": []
+        },
+        {
+          "name": "🎬 Scenario 2: Normal User Limitations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/me/",
+              "host": ["{{base_url}}"],
+              "path": ["me", ""]
+            },
+            "description": "📋 **Test Scenario 2: Normal User Limitations**\n\n**Steps to test:**\n1. Login with user_1 (normal user)\n2. Get profile (verify is_premium: false)\n3. Try to create lobby (should fail with 403)\n4. Join existing lobby (should work)\n5. Send message (should work)\n6. Try moderation actions (should fail)\n\n**Expected Results:**\n- ❌ Cannot create lobbies (403 Forbidden)\n- ✅ Can join existing lobbies\n- ✅ Can send messages\n- ❌ Cannot kick/ban users"
+          },
+          "response": []
+        },
+        {
+          "name": "🎬 Scenario 3: Moderation Testing",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/1/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "1", ""]
+            },
+            "description": "📋 **Test Scenario 3: Moderation System**\n\n**Prerequisites:** Be logged in as lobby owner or moderator\n\n**Steps to test:**\n1. Get lobby details\n2. Kick a user (set user_id variable)\n3. Ban a user\n4. Unban the user\n5. Add/remove moderators\n6. Transfer ownership\n\n**Expected Results:**\n- ✅ Kicked users removed from lobby\n- ✅ Banned users cannot rejoin\n- ✅ Moderators can kick/ban\n- ✅ Only owner can add/remove mods\n- ✅ Ownership transfer works"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Auto-refresh token if needed",
+          "const token = pm.collectionVariables.get('access_token');",
+          "if (!token) {",
+          "    console.log('No access token found. Please login first.');",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Global test to check for common error responses",
+          "pm.test('Status code is not 500', () => {",
+          "    pm.expect(pm.response.code).to.not.eql(500);",
+          "});",
+          "",
+          "if (pm.response.code === 401) {",
+          "    pm.test('Authentication required', () => {",
+          "        pm.expect(pm.response.code).to.eql(401);",
+          "        console.log('Please login first or refresh your token.');",
+          "    });",
+          "}"
+        ]
+      }
+    }
+  ]
+}

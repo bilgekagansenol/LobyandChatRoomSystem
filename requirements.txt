@@ -1,0 +1,16 @@
+Django==4.2.15
+djangorestframework==3.14.0
+channels==4.0.0
+channels-redis==4.1.0
+redis==4.6.0
+django-cors-headers==4.2.0
+djangorestframework-simplejwt==5.2.2
+pytest==7.4.0
+pytest-django==4.5.2
+pytest-asyncio==0.21.1
+black==23.7.0
+ruff==0.0.280
+mypy==1.5.1
+django-extensions==3.2.3
+python-decouple==3.8
+psycopg2-binary==2.9.7

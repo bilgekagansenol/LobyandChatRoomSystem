@@ -1,0 +1,572 @@
+{
+  "info": {
+    "name": "Premium Chat Lobby API - Complete Test Suite",
+    "description": "Complete API collection for Premium Chat Lobby system with demo users and test scenarios.\n\n🎯 **Demo Users Ready:**\n- **Premium Users**: premium_user_1, premium_user_2 (password: testpass123)\n- **Normal Users**: user_1, user_2, user_3, user_4, user_5 (password: testpass123)\n\n🚀 **Test Flow:**\n1. Login with premium_user_1\n2. List existing lobbies\n3. Create new lobby\n4. Join/leave lobbies\n5. Send messages\n6. Test moderation features\n\n📋 **Available Lobbies:** Gaming Lounge, VIP Room, General Chat",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "lobby_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"testpass123\",\n  \"password_confirm\": \"testpass123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register/",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', response.access);",
+                  "    pm.collectionVariables.set('refresh_token', response.refresh);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"premium_user_1\",\n  \"password\": \"testpass123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login/",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', response.access);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/refresh/",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "refresh", ""]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/me/",
+              "host": ["{{base_url}}"],
+              "path": ["me", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newemail@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/me/",
+              "host": ["{{base_url}}"],
+              "path": ["me", ""]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Lobbies",
+      "item": [
+        {
+          "name": "List All Lobbies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Public Open Lobbies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/?public=1&status=open",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", ""],
+              "query": [
+                {
+                  "key": "public",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "open"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Lobbies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/?search=gaming",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", ""],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "gaming"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Lobby (Premium Only)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('lobby_id', response.id.toString());",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Gaming Lobby\",\n  \"is_public\": true,\n  \"max_participants\": 8\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Lobby Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Lobby",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Lobby Name\",\n  \"max_participants\": 10\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join Lobby",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/join/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "join", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Leave Lobby",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/leave/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "leave", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Start Game",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/start/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "start", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Close Lobby",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/close/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "close", ""]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Moderation",
+      "item": [
+        {
+          "name": "Kick User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}},\n  \"reason\": \"Inappropriate behavior\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/kick/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "kick", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ban User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}},\n  \"reason\": \"Repeated violations\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/ban/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "ban", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unban User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/unban/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "unban", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Moderator",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/add_moderator/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "add_moderator", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Moderator",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/remove_moderator/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "remove_moderator", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transfer Ownership",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{user_id}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/transfer_ownership/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "transfer_ownership", ""]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "item": [
+        {
+          "name": "List Messages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/messages/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "messages", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Hello everyone! This is a test message.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/messages/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "messages", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Message",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/messages/1/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "messages", "1", ""]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Message",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/lobbies/{{lobby_id}}/messages/1/",
+              "host": ["{{base_url}}"],
+              "path": ["lobbies", "{{lobby_id}}", "messages", "1", ""]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

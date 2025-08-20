@@ -1,0 +1,581 @@
+# Django Premium Chat Lobby API - Frontend Development Guide
+
+## Base URL
+```
+http://127.0.0.1:8001/api/
+```
+
+## Authentication System
+JWT token bazlı kimlik doğrulama kullanılıyor. Her istekte Authorization header'ı gerekli:
+```
+Authorization: Bearer <access_token>
+```
+
+## 1. Authentication Endpoints
+
+### Register User
+```
+POST /api/auth/register/
+Content-Type: application/json
+
+Body:
+{
+    "username": "string",
+    "email": "string",
+    "password": "string"
+}
+
+Response 201:
+{
+    "user": {
+        "id": 1,
+        "username": "string",
+        "email": "string",
+        "is_premium": false
+    }
+}
+```
+
+### Login
+```
+POST /api/auth/login/
+Content-Type: application/json
+
+Body:
+{
+    "username": "string",
+    "password": "string"
+}
+
+Response 200:
+{
+    "access": "jwt_access_token",
+    "refresh": "jwt_refresh_token",
+    "user": {
+        "id": 1,
+        "username": "string",
+        "email": "string",
+        "is_premium": false
+    }
+}
+```
+
+### Refresh Token
+```
+POST /api/auth/refresh/
+Content-Type: application/json
+
+Body:
+{
+    "refresh": "jwt_refresh_token"
+}
+
+Response 200:
+{
+    "access": "new_jwt_access_token"
+}
+```
+
+## 2. User Profile
+
+### Get Current User Profile
+```
+GET /api/me/
+Authorization: Bearer <token>
+
+Response 200:
+{
+    "id": 1,
+    "username": "string",
+    "email": "string",
+    "is_premium": false,
+    "created_at": "2025-01-01T00:00:00Z"
+}
+```
+
+### Update Profile
+```
+PATCH /api/me/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "email": "new_email@example.com"
+}
+
+Response 200:
+{
+    "id": 1,
+    "username": "string",
+    "email": "new_email@example.com",
+    "is_premium": false
+}
+```
+
+## 3. Lobby Management
+
+### List All Lobbies
+```
+GET /api/lobbies/
+Authorization: Bearer <token>
+
+Query Parameters:
+- search: "lobby_name" (optional)
+- status: "open|in_game|closed" (optional)
+- is_public: true|false (optional)
+
+Response 200:
+{
+    "count": 10,
+    "next": "http://127.0.0.1:8001/api/lobbies/?page=2",
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "name": "Lobby Name",
+            "owner": {
+                "id": 1,
+                "username": "owner_name",
+                "is_premium": true
+            },
+            "is_public": true,
+            "status": "open",
+            "max_participants": 8,
+            "current_participants_count": 3,
+            "created_at": "2025-01-01T00:00:00Z"
+        }
+    ]
+}
+```
+
+### Create Lobby (Premium Only)
+```
+POST /api/lobbies/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "name": "My Awesome Lobby",
+    "is_public": true,
+    "max_participants": 8
+}
+
+Response 201:
+{
+    "id": 1,
+    "name": "My Awesome Lobby",
+    "owner": {
+        "id": 1,
+        "username": "premium_user",
+        "is_premium": true
+    },
+    "is_public": true,
+    "status": "open",
+    "max_participants": 8,
+    "current_participants_count": 1
+}
+
+Error 403 (Normal User):
+{
+    "detail": "Only premium users can create lobbies."
+}
+```
+
+### Get Lobby Details
+```
+GET /api/lobbies/{lobby_id}/
+Authorization: Bearer <token>
+
+Response 200:
+{
+    "id": 1,
+    "name": "Lobby Name",
+    "owner": {
+        "id": 1,
+        "username": "owner_name",
+        "is_premium": true
+    },
+    "is_public": true,
+    "status": "open",
+    "max_participants": 8,
+    "current_participants_count": 3,
+    "participants": [
+        {
+            "user": {
+                "id": 1,
+                "username": "user1",
+                "is_premium": false
+            },
+            "role": "owner",
+            "joined_at": "2025-01-01T00:00:00Z"
+        }
+    ]
+}
+```
+
+### Update Lobby (Owner Only)
+```
+PATCH /api/lobbies/{lobby_id}/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "name": "Updated Lobby Name",
+    "max_participants": 10
+}
+
+Response 200:
+{
+    "id": 1,
+    "name": "Updated Lobby Name",
+    "max_participants": 10
+}
+```
+
+## 4. Lobby Actions
+
+### Join Lobby
+```
+POST /api/lobbies/{lobby_id}/join/
+Authorization: Bearer <token>
+
+Response 200:
+{
+    "message": "Successfully joined the lobby",
+    "membership": {
+        "role": "member",
+        "joined_at": "2025-01-01T00:00:00Z"
+    }
+}
+
+Error Responses:
+- 400: "Lobby is not open" / "Lobby is full" / "Already in lobby"
+- 403: "You are banned from this lobby"
+```
+
+### Leave Lobby
+```
+POST /api/lobbies/{lobby_id}/leave/
+Authorization: Bearer <token>
+
+Response 200:
+{
+    "message": "Successfully left the lobby"
+}
+```
+
+### Start Game (Owner Only)
+```
+POST /api/lobbies/{lobby_id}/start/
+Authorization: Bearer <token>
+
+Response 200:
+{
+    "message": "Game started successfully",
+    "lobby": {
+        "id": 1,
+        "status": "in_game"
+    }
+}
+```
+
+### Close Lobby (Owner Only)
+```
+POST /api/lobbies/{lobby_id}/close/
+Authorization: Bearer <token>
+
+Response 200:
+{
+    "message": "Lobby closed successfully"
+}
+```
+
+## 5. Moderation Actions (Owner/Moderator Only)
+
+### Kick User
+```
+POST /api/lobbies/{lobby_id}/kick/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "user_id": 2,
+    "reason": "Inappropriate behavior"
+}
+
+Response 200:
+{
+    "message": "User kicked successfully"
+}
+
+Error 403:
+{
+    "detail": "You don't have permission to kick users."
+}
+```
+
+### Ban User
+```
+POST /api/lobbies/{lobby_id}/ban/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "user_id": 2,
+    "reason": "Spamming"
+}
+
+Response 200:
+{
+    "message": "User banned successfully"
+}
+```
+
+### Unban User
+```
+POST /api/lobbies/{lobby_id}/unban/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "user_id": 2
+}
+
+Response 200:
+{
+    "message": "User unbanned successfully"
+}
+```
+
+### Add Moderator
+```
+POST /api/lobbies/{lobby_id}/add_moderator/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "user_id": 2
+}
+
+Response 200:
+{
+    "message": "Moderator added successfully"
+}
+```
+
+### Remove Moderator
+```
+POST /api/lobbies/{lobby_id}/remove_moderator/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "user_id": 2
+}
+
+Response 200:
+{
+    "message": "Moderator removed successfully"
+}
+```
+
+### Transfer Ownership
+```
+POST /api/lobbies/{lobby_id}/transfer_ownership/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "user_id": 2
+}
+
+Response 200:
+{
+    "message": "Ownership transferred successfully"
+}
+```
+
+## 6. Chat Messages
+
+### Get Messages
+```
+GET /api/lobbies/{lobby_id}/messages/
+Authorization: Bearer <token>
+
+Query Parameters:
+- page: 1, 2, 3... (pagination)
+
+Response 200:
+{
+    "count": 50,
+    "next": "http://127.0.0.1:8001/api/lobbies/1/messages/?page=2",
+    "previous": null,
+    "results": [
+        {
+            "id": 1,
+            "sender": {
+                "id": 1,
+                "username": "user1"
+            },
+            "content": "Hello everyone!",
+            "created_at": "2025-01-01T00:00:00Z",
+            "is_deleted": false
+        }
+    ]
+}
+```
+
+### Send Message
+```
+POST /api/lobbies/{lobby_id}/messages/
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Body:
+{
+    "content": "Hello world!"
+}
+
+Response 201:
+{
+    "id": 1,
+    "sender": {
+        "id": 1,
+        "username": "user1"
+    },
+    "content": "Hello world!",
+    "created_at": "2025-01-01T00:00:00Z"
+}
+
+Rate Limit: 3 messages per 2 seconds
+Error 429:
+{
+    "detail": "Rate limit exceeded. Please wait before sending another message."
+}
+```
+
+### Delete Message (Own messages or moderator)
+```
+DELETE /api/lobbies/{lobby_id}/messages/{message_id}/
+Authorization: Bearer <token>
+
+Response 204: No Content
+```
+
+## 7. WebSocket Chat (Real-time)
+
+### Connection
+```
+ws://127.0.0.1:8001/ws/chat/{lobby_id}/
+```
+
+### Authentication
+WebSocket connection'da JWT token gerekli. Connection query parameter olarak:
+```
+ws://127.0.0.1:8001/ws/chat/{lobby_id}/?token=<access_token>
+```
+
+### Message Types
+
+#### Send Message
+```json
+{
+    "type": "chat_message",
+    "message": "Hello everyone!"
+}
+```
+
+#### Received Message
+```json
+{
+    "type": "chat_message",
+    "message": {
+        "id": 1,
+        "sender": {
+            "id": 1,
+            "username": "user1"
+        },
+        "content": "Hello everyone!",
+        "created_at": "2025-01-01T00:00:00Z"
+    }
+}
+```
+
+#### User Join/Leave
+```json
+{
+    "type": "user_joined",
+    "user": {
+        "id": 2,
+        "username": "new_user"
+    }
+}
+
+{
+    "type": "user_left",
+    "user": {
+        "id": 2,
+        "username": "user_left"
+    }
+}
+```
+
+#### Rate Limit Warning
+```json
+{
+    "type": "rate_limit_warning",
+    "message": "Slow down! Too many messages."
+}
+```
+
+## Error Codes
+- 400: Bad Request (validation errors)
+- 401: Unauthorized (token missing/invalid)
+- 403: Forbidden (permission denied)
+- 404: Not Found
+- 429: Rate Limited
+- 500: Server Error
+
+## Important Notes for Frontend Development
+
+1. **Authentication Flow:**
+   - Store JWT tokens securely (localStorage or secure cookies)
+   - Include access token in all API requests
+   - Handle token refresh when access token expires
+   - Redirect to login when refresh token expires
+
+2. **Premium Features:**
+   - Only premium users can create lobbies
+   - Check `user.is_premium` field before showing create lobby UI
+
+3. **Real-time Features:**
+   - Use WebSocket for real-time chat
+   - Handle connection drops and reconnection
+   - Show online/offline status
+
+4. **Rate Limiting:**
+   - Chat has 3 messages per 2 seconds limit
+   - Show appropriate UI feedback for rate limits
+
+5. **Permissions:**
+   - Owner can do everything in their lobby
+   - Moderators can kick/ban but cannot transfer ownership
+   - Members can only chat and leave
+
+6. **UI States:**
+   - Handle loading states for all API calls
+   - Show appropriate error messages
+   - Implement pagination for lists
+
+7. **Responsive Design:**
+   - Design for both desktop and mobile
+   - Consider chat UI for small screens

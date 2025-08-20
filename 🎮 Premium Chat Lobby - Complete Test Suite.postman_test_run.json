@@ -1,0 +1,921 @@
+{
+	"id": "b59ba110-dcd3-4f5b-aea2-f546a4ca3c8c",
+	"name": "🎮 Premium Chat Lobby - Complete Test Suite",
+	"timestamp": "2025-08-20T01:28:13.811Z",
+	"collection_id": "40948150-1218e2dc-4cc2-4013-8855-d6cfe787f4ca",
+	"folder_id": 0,
+	"environment_id": "40948150-5a0ffdc9-7f2e-43b1-a47a-0837283c8859",
+	"totalPass": 29,
+	"delay": "200",
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-08-20T01:28:06.288Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "fccc7297-02c0-4971-8bad-86a3425b45a7",
+			"name": "📝 Register New User",
+			"url": "http://localhost:8000/api/auth/register/",
+			"time": 22,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				22
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "4e1dc94e-3b6b-40d7-be07-1c0b6b041392",
+			"name": "🔑 Login - Premium User 1",
+			"url": "http://localhost:8000/api/auth/login/",
+			"time": 16,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "9492ee4e-f989-4484-ad57-555cca15160f",
+			"name": "🔑 Login - Normal User 1",
+			"url": "http://localhost:8000/api/auth/login/",
+			"time": 17,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "6b5ba90f-5d33-414c-ac7b-e01a71220458",
+			"name": "🔄 Refresh Token",
+			"url": "http://localhost:8000/api/auth/refresh/",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "2b0912fe-b0df-430c-9951-f45b150988ad",
+			"name": "👤 Get My Profile",
+			"url": "http://localhost:8000/api/me/",
+			"time": 11,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "f5f3fbdc-f364-42b7-b12f-5855a9d4384f",
+			"name": "✏️ Update Profile",
+			"url": "http://localhost:8000/api/me/",
+			"time": 12,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "8113cd59-056c-4c53-ae2f-704eccd68b7d",
+			"name": "📋 List All Lobbies",
+			"url": "http://localhost:8000/api/lobbies/",
+			"time": 15,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				15
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "a320b6d6-18b5-4e0a-9daf-57912301df12",
+			"name": "🔍 List Public Open Lobbies",
+			"url": "http://localhost:8000/api/lobbies/?public=1&status=open",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "ba6c4060-b637-4cee-879d-38c5ddad4441",
+			"name": "🔎 Search Lobbies",
+			"url": "http://localhost:8000/api/lobbies/?search=gaming",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "2d03086d-1c8f-42c4-8c8b-1964d69e1576",
+			"name": "➕ Create New Lobby (Premium Only)",
+			"url": "http://localhost:8000/api/lobbies/",
+			"time": 14,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "f808ec3d-4d37-46e5-aa9a-e4ae6080cd81",
+			"name": "🏠 Get Lobby Details",
+			"url": "http://localhost:8000/api/lobbies/1/",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "7e1f7165-e6c8-4914-b739-6c1aa56248ec",
+			"name": "✏️ Update Lobby (Owner Only)",
+			"url": "http://localhost:8000/api/lobbies/1/",
+			"time": 24,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				24
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "23b37bc1-dfc6-4ed7-96ef-dd1c7a09a15d",
+			"name": "🚪 Join Lobby",
+			"url": "http://localhost:8000/api/lobbies/1/join/",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "a3d1b685-07fa-4a22-9c5a-d6d4702e43ae",
+			"name": "🚶 Leave Lobby",
+			"url": "http://localhost:8000/api/lobbies/1/leave/",
+			"time": 11,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "11f8b3e2-5ab6-44ac-a450-d26b076fc499",
+			"name": "🎮 Start Game (Owner Only)",
+			"url": "http://localhost:8000/api/lobbies/1/start/",
+			"time": 13,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "dbe5e61a-110a-4177-becb-dbd9830ce03c",
+			"name": "🔒 Close Lobby (Owner Only)",
+			"url": "http://localhost:8000/api/lobbies/1/close/",
+			"time": 13,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "d908b053-50d8-42dc-9335-dfb58439f78a",
+			"name": "👢 Kick User",
+			"url": "http://localhost:8000/api/lobbies/1/kick/",
+			"time": 12,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "06b65e6e-30d9-4e27-9644-c2c6a07320e3",
+			"name": "🚫 Ban User",
+			"url": "http://localhost:8000/api/lobbies/1/ban/",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "b4f75cbc-e586-4070-93b7-3ce8cafc415f",
+			"name": "✅ Unban User",
+			"url": "http://localhost:8000/api/lobbies/1/unban/",
+			"time": 14,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "65f2f9e7-fb27-4002-93e4-22a8b05847b5",
+			"name": "⭐ Add Moderator",
+			"url": "http://localhost:8000/api/lobbies/1/add_moderator/",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "29da03fe-4442-4afc-bdb0-f188fe93b69d",
+			"name": "⭐ Remove Moderator",
+			"url": "http://localhost:8000/api/lobbies/1/remove_moderator/",
+			"time": 18,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				18
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "203ee0ee-d4f0-413f-8d90-676a056cca3f",
+			"name": "👑 Transfer Ownership",
+			"url": "http://localhost:8000/api/lobbies/1/transfer_ownership/",
+			"time": 11,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "438ee906-5f06-4a6f-84e2-88d24e96463c",
+			"name": "📨 List Messages",
+			"url": "http://localhost:8000/api/lobbies/1/messages/",
+			"time": 13,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "ff29efe5-779e-4c75-ab5e-df6e6a6c8bdc",
+			"name": "💬 Send Message",
+			"url": "http://localhost:8000/api/lobbies/1/messages/",
+			"time": 13,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "411ce2e8-717e-413e-ac3f-9394646bdb41",
+			"name": "📄 Get Specific Message",
+			"url": "http://localhost:8000/api/lobbies/1/messages/1/",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "c2ec8c37-294e-4f35-b639-63235289d2ca",
+			"name": "🗑️ Delete Message (Soft Delete)",
+			"url": "http://localhost:8000/api/lobbies/1/messages/1/",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "c8a41ff5-070c-400b-b2c6-12407dedf4d9",
+			"name": "🎬 Scenario 1: Premium User Full Flow",
+			"url": "http://localhost:8000/api/me/",
+			"time": 12,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "16e62e36-93ff-41f3-b844-35fec28b2cbc",
+			"name": "🎬 Scenario 2: Normal User Limitations",
+			"url": "http://localhost:8000/api/me/",
+			"time": 21,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				21
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		},
+		{
+			"id": "d6a1322c-a0b2-4485-8cf5-b702d4a80af1",
+			"name": "🎬 Scenario 3: Moderation Testing",
+			"url": "http://localhost:8000/api/lobbies/1/",
+			"time": 13,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status code is not 500": true
+			},
+			"testPassFailCounts": {
+				"Status code is not 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				13
+			],
+			"allTests": [
+				{
+					"Status code is not 500": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 385,
+	"collection": {
+		"requests": [
+			{
+				"id": "fccc7297-02c0-4971-8bad-86a3425b45a7",
+				"method": "POST"
+			},
+			{
+				"id": "4e1dc94e-3b6b-40d7-be07-1c0b6b041392",
+				"method": "POST"
+			},
+			{
+				"id": "9492ee4e-f989-4484-ad57-555cca15160f",
+				"method": "POST"
+			},
+			{
+				"id": "6b5ba90f-5d33-414c-ac7b-e01a71220458",
+				"method": "POST"
+			},
+			{
+				"id": "2b0912fe-b0df-430c-9951-f45b150988ad",
+				"method": "GET"
+			},
+			{
+				"id": "f5f3fbdc-f364-42b7-b12f-5855a9d4384f",
+				"method": "PATCH"
+			},
+			{
+				"id": "8113cd59-056c-4c53-ae2f-704eccd68b7d",
+				"method": "GET"
+			},
+			{
+				"id": "a320b6d6-18b5-4e0a-9daf-57912301df12",
+				"method": "GET"
+			},
+			{
+				"id": "ba6c4060-b637-4cee-879d-38c5ddad4441",
+				"method": "GET"
+			},
+			{
+				"id": "2d03086d-1c8f-42c4-8c8b-1964d69e1576",
+				"method": "POST"
+			},
+			{
+				"id": "f808ec3d-4d37-46e5-aa9a-e4ae6080cd81",
+				"method": "GET"
+			},
+			{
+				"id": "7e1f7165-e6c8-4914-b739-6c1aa56248ec",
+				"method": "PATCH"
+			},
+			{
+				"id": "23b37bc1-dfc6-4ed7-96ef-dd1c7a09a15d",
+				"method": "POST"
+			},
+			{
+				"id": "a3d1b685-07fa-4a22-9c5a-d6d4702e43ae",
+				"method": "POST"
+			},
+			{
+				"id": "11f8b3e2-5ab6-44ac-a450-d26b076fc499",
+				"method": "POST"
+			},
+			{
+				"id": "dbe5e61a-110a-4177-becb-dbd9830ce03c",
+				"method": "POST"
+			},
+			{
+				"id": "d908b053-50d8-42dc-9335-dfb58439f78a",
+				"method": "POST"
+			},
+			{
+				"id": "06b65e6e-30d9-4e27-9644-c2c6a07320e3",
+				"method": "POST"
+			},
+			{
+				"id": "b4f75cbc-e586-4070-93b7-3ce8cafc415f",
+				"method": "POST"
+			},
+			{
+				"id": "65f2f9e7-fb27-4002-93e4-22a8b05847b5",
+				"method": "POST"
+			},
+			{
+				"id": "29da03fe-4442-4afc-bdb0-f188fe93b69d",
+				"method": "POST"
+			},
+			{
+				"id": "203ee0ee-d4f0-413f-8d90-676a056cca3f",
+				"method": "POST"
+			},
+			{
+				"id": "438ee906-5f06-4a6f-84e2-88d24e96463c",
+				"method": "GET"
+			},
+			{
+				"id": "ff29efe5-779e-4c75-ab5e-df6e6a6c8bdc",
+				"method": "POST"
+			},
+			{
+				"id": "411ce2e8-717e-413e-ac3f-9394646bdb41",
+				"method": "GET"
+			},
+			{
+				"id": "c2ec8c37-294e-4f35-b639-63235289d2ca",
+				"method": "DELETE"
+			},
+			{
+				"id": "c8a41ff5-070c-400b-b2c6-12407dedf4d9",
+				"method": "GET"
+			},
+			{
+				"id": "16e62e36-93ff-41f3-b844-35fec28b2cbc",
+				"method": "GET"
+			},
+			{
+				"id": "d6a1322c-a0b2-4485-8cf5-b702d4a80af1",
+				"method": "GET"
+			}
+		]
+	}
+}
